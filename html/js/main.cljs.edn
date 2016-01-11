@@ -1,2 +1,2 @@
-{:require [chart.core]
+{:require [chart.core chart.simple-bar]
  :compiler-options {:asset-path "js/main.out"}}
