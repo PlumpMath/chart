@@ -1,26 +1,4 @@
-;; (ns chart.core
-;;   (:require [reagent.core :as r]
-;;             [cljsjs.d3] ))
-
-;; (defn simple-component []
-;;   [:div
-;;    [:p "I am a component!"]
-;;    [:p.someclass
-;;     "I have " [:strong "bold"]
-;;     [:span {:style {:color "red"}} " and red "] "text."]])
-
-;; (defn render-simple []
-;;   (r/render simple-component
-;;             (.getElementById js/document "app") ))
-
-;; (render-simple)
-
-
-;; (.. js/d3
-;;     (select "#someDiv")
-;;     (style "background" "yellow"))
-
-(ns chart.core
+(ns chart.simple-bar
   (:require [reagent.core :as r]
             [cljsjs.d3]
             [cljs.debux :refer-macros [dbg clog break]] ))
@@ -69,10 +47,8 @@
        @data*
        [:div "Simple bar"])}))
 
-(r/render [simple-bar] (.getElementById js/document "app"))
+
+(r/render [simple-bar] (.getElementById js/document "bar"))
 
 (clog "hello")
-
-
-
-
+(reset! data* [10 20 30 40 50 60 70 80 90 100 110])
