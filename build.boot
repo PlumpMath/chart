@@ -33,12 +33,12 @@
   "Launch immediate feedback dev environment"
   []
   (comp
-   #_(serve :dir "target"                                
-          :handler 'chart.core/app   ; ring hanlder
-          :resource-root "target"    ; root classpath
-          :reload true)  
-   (watch)
-   (reload)
-   ;(cljs-repl)
-   (cljs :compiler-options {:main "chart.line-chart"}) ))
+    #_(serve :dir "target"                                
+           :handler 'chart.core/app   ; ring hanlder
+           :resource-root "target"    ; root classpath
+           :reload true)  
+    (watch)
+    (reload)
+    ;(cljs-repl)
+    (cljs :compiler-options {:main "chart.line-chart"}) ))
 
