@@ -37,11 +37,11 @@
        [:div "Simple bar" (render-bar @data*)])}))
 
 
-(r/render [simple-bar] (.getElementById js/document "bar"))
+;(r/render [simple-bar] (.getElementById js/document "bar"))
 
-(defn shift [data]
-  (conj (vec (drop 1 data)) 110))
+;(defn shift [data]
+;  (conj (vec (drop 1 data)) 110))
 
-(swap! data* shift)
+;(swap! data* shift)
 
 
