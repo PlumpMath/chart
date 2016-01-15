@@ -1,6 +1,8 @@
 (ns chart.line-chart
   (:require [reagent.core :as r]
             [cljsjs.d3]
+            [domina :as dom]
+            [domina.events :as evt]
             [cljs.debux :refer-macros [dbg clog break]] ))
 
 (defn- scale
@@ -250,4 +252,4 @@
 
 (set-data chart* (make-data))
 
-
+(evt/listen! (dom/by-id "btn") :click (fn [evt] (set-data chart* (make-data))))

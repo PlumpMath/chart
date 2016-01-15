@@ -6,6 +6,7 @@
                   [org.clojure/clojurescript "1.7.228"]
                   [cljsjs/d3 "3.5.7-1"]
                   [reagent "0.5.1"]
+                  [domina "1.0.3"]
                   [datascript "0.13.3"]
                   [posh "0.3.3.1"]
                   [philoskim/debux "0.1.0"]
