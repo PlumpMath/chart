@@ -156,8 +156,7 @@
                  (attr "width" (:width @ctx))
                  (attr "height" (:height @ctx)) )]
     (render-axes ctx $svg)
-    (init-body ctx $svg)
-    (clog @ctx "init-body") ))
+    (init-body ctx $svg) ))
 
 (defn render-lines
   [ctx]
@@ -172,7 +171,7 @@
     (.. lines
         (enter)
         (append "path")                
-        (style "stroke" (fn [d i] ((:color-space @ctx) i)))
+        (style "stroke" (fn [d i] ((:color-scale @ctx) i)))
         (attr "class" "line"))
     (.. lines
        (transition)
@@ -180,13 +179,28 @@
 
 (defn render-dots
   [ctx]
-)
+  (let [data (:data @ctx)
+        body (:body @ctx)]
+    (doseq [[idx line] (partition 2 (interleave (range (count data)) data))]
+      (clog [idx line])
+      (let [dots (.. body
+                     (selectAll (str "circle._" idx))
+                     (data (clj->js line)))]
+        (.. dots 
+            enter
+            (append "circle")
+            (attr "class" (str "dot _" idx)))
+        (.. dots 
+            (style "stroke" (fn [d] (:color-scale @ctx)))
+            transition
+            (attr "cx" (fn [d] ((:x-scale @ctx) (aget d "x"))))
+            (attr "cy"  (fn [d] ((:y-scale @ctx) (aget d "y"))))
+            (attr "r" 4.5) )))))
 
 (defn render-body
   [ctx]
   (render-lines ctx)
-  ;(render-dots ctx)
-)
+  (render-dots ctx))
 
 (defn init-context
   "<width int>  svg 너비  
@@ -211,15 +225,14 @@
   (r/create-class
     {:component-did-mount
      (fn [this]   ; reagent this
-       (clog "did-mount")
        (init-chart (r/dom-node this) ctx))
 
      :reagent-render
      (fn [this]
-       (clog "render")
-       ;(when (clog (:body @ctx))
+       (if (clog (:body @ctx))
          [:div [:div "Line Chart"]
-               #_(render-body ctx) ] )}))
+               [:div (render-body ctx)]]
+         [:div] ))}))
 
 (defn set-data
   [ctx data]
@@ -228,7 +241,7 @@
 (defn make-data
   []
   (for [line (range 2)]
-    (for [i (range 12)]
+    (for [i (range 11)]
       {:x i :y (rand-int 10)} )))
 
 (def chart* (init-context 600 300 [0 10] [0 10]))
